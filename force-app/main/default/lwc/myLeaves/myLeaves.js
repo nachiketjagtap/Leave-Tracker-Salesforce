@@ -1,5 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import getMyLeaves from '@salesforce/apex/LeaveRequstController.getMyLeaves';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+
 
 const COLUMNS = [
     {
@@ -55,6 +57,9 @@ export default class MyLeaves extends LightningElement {
 
     myLeaves = [];
     myLeavesWiredResult;
+    showModalPopup=false;
+    objectApiName='LeaveRequest__c';
+    recordId='';
     @wire(getMyLeaves)
     wiredMyLeaves(result) {
         this.myLeavesWiredResult = result;
@@ -74,6 +79,31 @@ export default class MyLeaves extends LightningElement {
     }
     get noRecordsFound(){
         return this.myLeaves.length == 0;
+        this.recordId='';
 
+    }
+    newRequestClickHandler(){
+        this.showModalPopup=true;
+    }
+    popupCloseHandler(event){
+
+        this.showModalPopup=false;
+    }
+    rowActionHandler(event){
+        this.showModalPopup=true;
+        this.recordId=event.detail.row.Id;
+    }
+    successHandler(){
+        this.showModalPopup=false;
+        this.ShowToast('Data Saved Successfully..!');
+
+    }
+    ShowToastEvent(message,title='success', variant='success'){
+        const event = new ShowToastEvent({
+            title,
+            message,
+            variant
+        });
+        this.dispatchEvent(event);
     }
 }
