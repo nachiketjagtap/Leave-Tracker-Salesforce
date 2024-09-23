@@ -1,6 +1,8 @@
 import { LightningElement, wire } from 'lwc';
 import getMyLeaves from '@salesforce/apex/LeaveRequstController.getMyLeaves';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import Id from '@salesforce/user/Id';
+import {refreshApex} from '@salesforce/apex';
 
 
 const COLUMNS = [
@@ -60,6 +62,7 @@ export default class MyLeaves extends LightningElement {
     showModalPopup=false;
     objectApiName='LeaveRequest__c';
     recordId='';
+    currentUserId=Id;
     @wire(getMyLeaves)
     wiredMyLeaves(result) {
         this.myLeavesWiredResult = result;
@@ -96,6 +99,7 @@ export default class MyLeaves extends LightningElement {
     successHandler(event){
         this.showModalPopup=false;
         this.showToastEvent('Data Saved Successfully..!');
+        refreshApex(this.myLeavesWiredResult);
 
     }
     showToastEvent(message,title='success', variant='success'){
