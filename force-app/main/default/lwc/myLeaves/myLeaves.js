@@ -102,6 +102,23 @@ export default class MyLeaves extends LightningElement {
         refreshApex(this.myLeavesWiredResult);
 
     }
+    submitHandler(event){
+        event.preventDefault();
+        const fields = {...event.detail.fields};
+        fields.Status__c='Pending';
+        if(new Date(fields.From_Date__c) > new Date(fields.To_Date__c)){
+            this.showToastEvent('From Date should be less than To Date..!', 'Error', 'error');
+            
+        }
+        else if(new Date()>new Date(fields.From_Date__c)){
+            this.showToastEvent('From Date should be less than Today..!', 'Error', 'error');
+           
+        }
+        else{
+            this.refs.leaveRequestFrom.submit(fields);
+        }
+        
+    }
     showToastEvent(message,title='success', variant='success'){
         const event = new ShowToastEvent({
             title,
