@@ -1,5 +1,6 @@
 <template>
     <lightning-card>
+        <lightning-button-icon icon-name="utility:add" variant="border-filled" slot="actions" onclick={newRequestClickHandler}></lightning-button-icon>
         <lightning-datatable key-field="Id" data={myLeaves} columns={columns}
         onrowaction={rowActionHandler}></lightning-datatable>
         <template lwc:if={noRecordsFound}>

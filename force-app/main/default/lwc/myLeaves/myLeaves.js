@@ -93,12 +93,12 @@ export default class MyLeaves extends LightningElement {
         this.showModalPopup=true;
         this.recordId=event.detail.row.Id;
     }
-    successHandler(){
+    successHandler(event){
         this.showModalPopup=false;
-        this.ShowToast('Data Saved Successfully..!');
+        this.showToastEvent('Data Saved Successfully..!');
 
     }
-    ShowToastEvent(message,title='success', variant='success'){
+    showToastEvent(message,title='success', variant='success'){
         const event = new ShowToastEvent({
             title,
             message,
