@@ -101,6 +101,9 @@ export default class MyLeaves extends LightningElement {
         this.showToastEvent('Data Saved Successfully..!');
         refreshApex(this.myLeavesWiredResult);
 
+        const refreshEvent = new CustomEvent('refreshleaverequests');
+        this.dispatchEvent(refreshEvent);
+
     }
     submitHandler(event){
         event.preventDefault();
