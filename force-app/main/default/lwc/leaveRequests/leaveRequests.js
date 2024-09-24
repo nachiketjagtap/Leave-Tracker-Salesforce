@@ -13,6 +13,13 @@ const COLUMNS = [
         
     },
     {
+        label: 'User',
+        fieldName: 'userName',
+        cellAttributes: { class: {fieldName:'cellClass'} },
+    
+        
+    },
+    {
         label: 'From Date',
         fieldName: 'From_Date__c',
         cellAttributes: { class: {fieldName:'cellClass'} },
@@ -69,6 +76,7 @@ export default class LeaveRequets extends LightningElement {
         if(result.data){
             this.leavesRequests = result.data.map(a=>({
                 ...a,
+                userName : a.User__r.Name,
                 cellClass: a.Status__c == 'Approved' ? 'slds-theme_success':a.Status__c == 'Rejected' ? 'slds-theme_warning':'',
                 isEditDisabled: a.Status__c!=='Pending'
 
